@@ -1,13 +1,10 @@
 import Story from "../models/Story";
 
-export const home = async(req, res) => {
-  try {
-    const stories = await Story.find({}).sort({createdAt:"desc"});
-    return res.render("home", { pageTitle: "Home", stories }); 
-  } catch (error) {
-    return res.render("server-error", {error});
-  }
-};
+export const home = async (req, res) => {
+    const stories = await Story.find({}).sort({ createdAt: "desc" });
+    return res.render("home", { pageTitle: "Home", stories });
+  };
+
 export const watch = async (req, res) => {
   const { id } = req.params;
   const story = await Story.findById(id);
