@@ -1,19 +1,9 @@
-Doctype
-html(lang="ko")
-    head 
-        title | hoonap
-        link(rel="stylesheet", href="https://unpkg.com/mvp.css")
-    body
-        div(id="map" style="width:100%;height:600px;")
-        script(src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d9355f267cb6b45d2ef37bfcfa4f4a02&libraries=services,clusterer,drawing")
-        //- script(src="./map.js") 
-        script.
-            function init(){
-                var mapContainer = document.getElementById('map'), 
-                mapOption = { 
-                    center: new kakao.maps.LatLng(36.33929480377198, 127.39343696623958),
-                    level: 7
-                };
-                var map = new kakao.maps.Map(mapContainer, mapOption); 
-            };
-            init();
+extends base
+include mixins/story
+
+block content
+    h2 Welcome here you will see the trending stories
+    each story in stories
+        +story(story)
+    else
+        li Sorry nothing found

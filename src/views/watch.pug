@@ -1,0 +1,9 @@
+extends base.pug
+
+block content
+    div
+        p=story.description
+        small=story.createdAt
+    a(href=`${story.id}/edit`) Edit Story &rarr;
+    br
+    a(href=`${story.id}/delete`) Delete Story &rarr;

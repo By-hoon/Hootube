@@ -1,0 +1,10 @@
+mixin story(story)
+    div
+        h4
+            a(href=`/stories/${story.id}`)=story.title
+        p= story.description
+        ul
+            each hashtag in story.hashtags
+                li=hashtag
+        small= story.createdAt
+        hr
