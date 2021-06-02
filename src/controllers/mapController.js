@@ -6,3 +6,4 @@ export const mapPrint =  (req, res) => {
 export const markerAdd =  (req, res) => {
     return res.render("marker", { pageTitle: "Marker Add" });
 };
+

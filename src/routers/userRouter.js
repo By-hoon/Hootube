@@ -1,4 +1,5 @@
 import express from "express";
+import { render } from "pug";
 import {
   getEdit,
   postEdit,
@@ -28,7 +29,7 @@ userRouter
   .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
-
+  
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 
