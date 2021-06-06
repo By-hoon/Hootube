@@ -1,1 +1,0 @@
-(()=>{var a,e;a=document.getElementById("map"),e={center:new kakao.maps.LatLng(36.33929480377198,127.39343696623958),level:7},new kakao.maps.Map(a,e)})();
