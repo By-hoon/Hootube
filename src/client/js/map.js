@@ -1,3 +1,5 @@
+import "../scss/styles.scss";
+
 function init(){
     var mapContainer = document.getElementById('map'), 
     mapOption = { 
