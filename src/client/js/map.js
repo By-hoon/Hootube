@@ -7,5 +7,14 @@ function init(){
         level: 7
     };
     var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+    kakao.maps.event.addListener(map, 'click', makeMarker);
+};
+
+function makeMarker(mouseevent) {
+    var latlng = mouseevent.latLng; 
+    var markerLat = latlng.getLat();
+    var markerLng = latlng.getLng();
+    var response = Response.redirect(url, status);
 };
 init();
