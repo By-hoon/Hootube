@@ -15,6 +15,6 @@ function makeMarker(mouseevent) {
     var latlng = mouseevent.latLng; 
     var markerLat = latlng.getLat();
     var markerLng = latlng.getLng();
-    var response = Response.redirect(url, status);
+    alert("click");
 };
 init();
