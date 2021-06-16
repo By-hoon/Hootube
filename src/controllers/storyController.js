@@ -40,13 +40,14 @@ export const getUpload = (req, res) => {
 };
 export const postUpload = async (req, res) => {
   const { path: fileUrl } = req.file;
-  const { title, description, hashtags, adress } = req.body;
-  console.log(adress);
+  const { title, description, hashtags, lat, lng } = req.body;
   try {
     await Story.create({
       title,
       description,
       fileUrl,
+      lat,
+      lng,
       hashtags: Story.formatHashtags(hashtags),
     });
     return res.redirect("/");

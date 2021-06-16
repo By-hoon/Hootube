@@ -1,3 +1,5 @@
+import Story from "../models/Story";
+
 export const mapPrint =  (req, res) => {
     return res.render("map", { pageTitle: "map" });
 };
