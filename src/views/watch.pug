@@ -1,6 +1,7 @@
 extends base.pug
 
 block content
+    video(src="/" + story.fileUrl, controls)
     div
         p=story.description
         small=story.createdAt

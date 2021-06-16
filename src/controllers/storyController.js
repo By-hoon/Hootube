@@ -39,16 +39,18 @@ export const getUpload = (req, res) => {
   return res.render("upload", {pageTitle: `Upload Story`});
 };
 export const postUpload = async (req, res) => {
-  const {title, description, hashtags} = req.body;
-  try{
-    const story = new Story({
-    title : title,
-    description : description,
-    hashtags: Story.formatHashtags(hashtags),
-  });
-  await story.save();
-  return res.redirect("/");
-}catch(error){
+  const { path: fileUrl } = req.file;
+  const { title, description, hashtags } = req.body;
+  try {
+    await Story.create({
+      title,
+      description,
+      fileUrl,
+      hashtags: Story.formatHashtags(hashtags),
+    });
+    return res.redirect("/");
+  } catch (error) {
+    console.log(error);
   return res.render("upload", {pageTitle: `Upload Story`, errorMessage: error._message});
 }
 };
