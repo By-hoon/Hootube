@@ -40,7 +40,8 @@ export const getUpload = (req, res) => {
 };
 export const postUpload = async (req, res) => {
   const { path: fileUrl } = req.file;
-  const { title, description, hashtags } = req.body;
+  const { title, description, hashtags, adress } = req.body;
+  console.log(adress);
   try {
     await Story.create({
       title,
@@ -50,7 +51,6 @@ export const postUpload = async (req, res) => {
     });
     return res.redirect("/");
   } catch (error) {
-    console.log(error);
   return res.render("upload", {pageTitle: `Upload Story`, errorMessage: error._message});
 }
 };

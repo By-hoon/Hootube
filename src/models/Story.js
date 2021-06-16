@@ -10,8 +10,9 @@ const storySchema = new mongoose.Schema({
         views:{type: Number, default: 0, required: true},
         rating: {type: Number, default: 0, required: true},
     },
-    lat: {type:Number, default: 0,required: true},
-    lng: {type:Number, default: 0,required: true},
+    //owner: {type: mongoose.Schema.Types.ObjectId, required: true, ref:''},
+    lat: {type:Number,required: true},
+    lng: {type:Number,required: true},
 });
 
 storySchema.static('formatHashtags', function(hashtags){

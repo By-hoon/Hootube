@@ -4,6 +4,7 @@ html(lang="ko")
         title #{pageTitle} | Hoonap
         link(rel="stylesheet", href="https://unpkg.com/mvp.css")
         link(rel="stylesheet", href="/assets/css/styles.css")
+        script(src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d9355f267cb6b45d2ef37bfcfa4f4a02&libraries=services,clusterer,drawing")
     body
         header 
             h1=pageTitle
@@ -14,6 +15,8 @@ html(lang="ko")
                     if loggedIn
                         li
                             a(href="/stories/upload") Upload Story
+                        li 
+                            a(href=`/users/${loggedInUser._id}`) My Profile
                         li
                             a(href="/users/edit") Edit Profile
                         li
