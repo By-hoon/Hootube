@@ -4,6 +4,8 @@ block content
     video(src="/" + story.fileUrl, controls)
     div
         p=story.description
+        small=story.address
+        br
         small=story.createdAt
     a(href=`${story.id}/edit`) Edit Story &rarr;
     br

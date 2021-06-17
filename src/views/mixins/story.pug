@@ -6,5 +6,7 @@ mixin story(story)
         ul
             each hashtag in story.hashtags
                 li=hashtag
+        small= story.address 
+        br
         small= story.createdAt
         hr

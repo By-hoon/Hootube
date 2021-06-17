@@ -13,6 +13,7 @@ const storySchema = new mongoose.Schema({
     //owner: {type: mongoose.Schema.Types.ObjectId, required: true, ref:''},
     lat: {type:Number,required: true},
     lng: {type:Number,required: true},
+    address: {type:String, required: true},
 });
 
 storySchema.static('formatHashtags', function(hashtags){
