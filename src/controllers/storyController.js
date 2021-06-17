@@ -36,7 +36,7 @@ export const postEdit = async (req, res) => {
 };
 
 export const getUpload = (req, res) => {
-  return res.render("upload", {pageTitle: `Upload Story`});
+  return res.render("upload", {pageTitle: `Upload Story`, simple: "yeah"});
 };
 export const postUpload = async (req, res) => {
   const { path: fileUrl } = req.file;

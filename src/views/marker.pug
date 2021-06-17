@@ -1,4 +1,25 @@
 extends map.pug
-
+include mixins/marker
 
 block content
+    
+    div(id="map" style="width:100%;height:90%;")
+    
+    each marker in stories
+        +marker(marker)
+
+    script.
+        function init(){
+            const markerLat =  document.getElementsByClassName('markerLat');
+            const markerLng =  document.getElementsByClassName('markerLng');
+            mapContainer = document.getElementById('map'),
+            mapOption = { 
+                center: new kakao.maps.LatLng(36.33929480377198, 127.39343696623958),
+                level: 7
+            };
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+            for(var i =0 ; i< markerLat.length; i++){
+                alert(markerLat[i].value);
+            }
+        };
+        init();

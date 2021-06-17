@@ -4,8 +4,8 @@ export const mapPrint =  (req, res) => {
     return res.render("map", { pageTitle: "map" });
 };
 
-export const markerAdd =  (req, res) => {
-    
-    return res.render("marker", { pageTitle: "Marker Add" });
+export const markerAdd =  async (req, res) => {
+    const stories = await Story.find({}).sort({ createdAt: "desc" });
+    return res.render("marker", { pageTitle: "Marker Add" , stories});
 };
 
