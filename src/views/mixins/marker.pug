@@ -1,4 +1,5 @@
 mixin marker(marker)
     div 
-        input(class="markerLat", type="text", value=`${marker.lat}`)
-        input(class="markerLng", type="text", value=`${marker.lng}`)
+        input(class="markerLat", type="hidden", value=`${marker.lat}`)
+        input(class="markerLng", type="hidden", value=`${marker.lng}`)
+        input(class="markerTitle", type="hidden", value=`${marker.title}`)
