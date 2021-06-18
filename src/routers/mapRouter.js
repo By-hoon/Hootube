@@ -1,10 +1,10 @@
 import express from "express";
 
-import { mapPrint, markerAdd } from "../controllers/mapController";
+import { mapPrint, showStory } from "../controllers/mapController";
 
 const mapRouter = express.Router();
 
 mapRouter.get("/", mapPrint);
-mapRouter.get("/add", markerAdd);
+mapRouter.get("/add", showStory);
 
 export default mapRouter;

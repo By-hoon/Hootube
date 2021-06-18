@@ -5,6 +5,7 @@ export const mapPrint = async (req, res) => {
     return res.render("map", { pageTitle: "Map" , stories});
 };
 
-export const markerAdd =  (req, res) => {
+export const showStory = async (req, res) => {
+
 };
 

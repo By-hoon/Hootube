@@ -15,6 +15,13 @@ block content
                 center: new kakao.maps.LatLng(36.33929480377198, 127.39343696623958),
                 level: 7
             };
+
+            var clusterer = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+                minLevel: 10 // 클러스터 할 최소 지도 레벨 
+            });
+
             var map = new kakao.maps.Map(mapContainer, mapOption);
             const markerLat =  document.getElementsByClassName('markerLat');
             const markerLng =  document.getElementsByClassName('markerLng');
@@ -34,19 +41,25 @@ block content
                 });
                 kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
                 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+                var markers = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(markerLat[i].value, markerLng[i].value)
+                });
+
+                clusterer.addMarker(markers);
             };
         }
         function makeOverListener(map, marker, infowindow) {
             return function() {
                 infowindow.open(map, marker);
             };
-        }
+        };
 
         function makeOutListener(infowindow) {
             return function() {
                 infowindow.close();
             };
-        }
+        };
         
         function init(){
             mapPrint();
