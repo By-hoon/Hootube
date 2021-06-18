@@ -1,0 +1,35 @@
+.story__data {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  .story__title {
+    font-size: 26px;
+    margin-bottom: 5px;
+  }
+  .story__createdAt {
+    font-size: 12px;
+  }
+  .story__owner {
+    margin-bottom: 5px;
+    font-size: 14px;
+    a {
+      color: cornflowerblue;
+      text-decoration: underline;
+    }
+  }
+}
+.story__comments {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  .story__comment {
+    padding: 10px;
+    border-radius: 9999px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+  }
+}
