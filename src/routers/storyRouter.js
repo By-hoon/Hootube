@@ -7,7 +7,7 @@ import {
   postUpload,
   deleteStory,
 } from "../controllers/storyController";
-import { protectorMiddleware, videoUpload } from "../middlewares";
+import { protectorMiddleware, storyUpload } from "../middlewares";
 
 const storyRouter = express.Router();
 
@@ -25,6 +25,6 @@ storyRouter
   .route("/upload")
   .all(protectorMiddleware)
   .get(getUpload)
-  .post(videoUpload.fields([{ name: "video" }, { name: "thumb" }]), postUpload);
+  .post(storyUpload.fields([{ name: "story" }, { name: "thumb" }]), postUpload);
 
 export default storyRouter;
