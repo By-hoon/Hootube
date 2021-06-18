@@ -4,8 +4,9 @@ doctype html
 html(lang="ko")
     head
         title #{pageTitle} | #{siteName}
+        script(src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=d9355f267cb6b45d2ef37bfcfa4f4a02&libraries=services,clusterer,drawing")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
-        link(rel="stylesheet", href="/css/styles.css")
+        link(rel="stylesheet", href="/static/css/styles.css")
     body
         if messages.error
             +message("error", messages.error)
@@ -17,5 +18,5 @@ html(lang="ko")
         main
             block content
         include partials/footer
-    script(src="assets/js/main.js") 
+    script(src="/static/js/main.js") 
     block scripts
