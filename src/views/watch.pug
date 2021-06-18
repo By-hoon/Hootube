@@ -1,12 +1,47 @@
-extends base.pug
+extends base
 
 block content
-    video(src="/" + story.fileUrl, controls)
-    div
-        p=story.description
-        small=story.address
-        br
-        small=story.createdAt
-    a(href=`${story.id}/edit`) Edit Story &rarr;
-    br
-    a(href=`${story.id}/delete`) Delete Story &rarr;
+    div#storyContainer(data-id=story._id)
+        story(src=story.fileUrl)
+        div#storyControls.storyControls
+            div.storyControls__play
+                span#play.storyControls__playBtn
+                    i.fas.fa-play
+                div.storyControls__time
+                    span#currenTime 00:00
+                    span  / 
+                    span#totalTime 00:00
+            input(type="range",step="1", value="0", min="0")#timeline.storyControls__timeline
+            div.storyControls__volume
+                input(type="range",step="0.1", value=0.5, min="0", max="1")#volume
+                span#mute
+                    i.fas.fa-volume-up
+            div
+                span#fullScreen
+                    i.fas.fa-expand
+
+    div.story__data
+        p.story__title=story.title
+        small.story__owner Uploaded by 
+            a(href=`/users/${story.owner._id}`)=story.owner.name
+        small.story__createdAt=new Date(story.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        if String(story.owner._id) === String(loggedInUser._id)
+            a(href=`${story.id}/edit`) Edit Story &rarr;
+            br
+            a(href=`${story.id}/delete`) Delete Story &rarr;
+    if loggedIn
+        div.story__add-comments
+            form.story__comment-form#commentForm
+                textarea(cols="30", rows="10", placeholder="Write a nice commment...")
+                button Add Comment
+    div.story__comments
+        ul
+            each comment in story.comments.reverse()
+                li.story__comment(data-id=comment.id)
+                    i.fas.fa-comment
+                    span  #{comment.text}
+                    span ❌
+block scripts
+    script(src="/static/js/storyPlayer.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js") 

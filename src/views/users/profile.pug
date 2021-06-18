@@ -1,4 +1,13 @@
-extend ../base
+extends ../base
+include ../mixins/story
 
-block cotent 
-    h1 Hello
+
+block content
+    div.profile__data
+        img(src="/" + user.avatarUrl).avatar
+        h3=user.name
+    div.story-grid
+        each story in user.stories
+            +story(story)
+        else
+            span.empty__message No stories found

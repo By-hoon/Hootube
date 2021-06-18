@@ -3,12 +3,10 @@ include mixins/story
 
 block content
     if loggedIn
-        if loggedInUser.avatarUrl
-            img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
-        h2 Stories are here
-        each story in stories
-            +story(story)
-        else
-            li Sorry nothing found
+        div.video-grid
+            each story in stories
+                +story(story)
+            else
+                li Sorry nothing found
     else
         h2 Please log in.

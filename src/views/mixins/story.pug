@@ -1,12 +1,8 @@
 mixin story(story)
-    div
-        h4
-            a(href=`/stories/${story.id}`)=story.title
-        p= story.description
-        ul
-            each hashtag in story.hashtags
-                li=hashtag
-        small= story.address 
-        br
-        small= story.createdAt
-        hr
+    a(href=`/stories/${story.id}`).story-mixin
+        div.story-mixin__thumb(style=`background-image:url(${story.thumbUrl});background-size:cover;background-position:center;`)
+        div.story-mixin__data
+            span.story-mixin__title=story.title
+            div.story-mixin__meta
+                span #{story.owner.name} • 
+                span #{story.meta.views} 회
