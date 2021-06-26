@@ -23,6 +23,8 @@ block content
             });
 
             var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            //마커 추가부분
             const markerLat =  document.getElementsByClassName('markerLat');
             const markerLng =  document.getElementsByClassName('markerLng');
             const markerTitle =  document.getElementsByClassName('markerTitle');
@@ -49,6 +51,8 @@ block content
                 clusterer.addMarker(markers);
             };
         }
+
+        //마커 정보 표시
         function makeOverListener(map, marker, infowindow) {
             return function() {
                 infowindow.open(map, marker);

@@ -42,6 +42,8 @@ block content
                     }
                 };
                 geocoder.coord2Address(markerLng, markerLat, callback);
+
+                //input 태그에 값으로 넣기
                 Lat.setAttribute("value", markerLat);
                 Lng.setAttribute("value", markerLng);
             });
