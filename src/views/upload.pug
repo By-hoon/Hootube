@@ -11,6 +11,8 @@ block content
         form(method="POST", enctype="multipart/form-data")
             label(for="story") Story File
             input(type="file", accept="story/*", required, id="story", name="story")
+            label(for="thumb") Thumbnail File
+            input(type="file", accept="image/*", required, id="thumb", name="thumb")
             input(placeholder="Title", required, type="text", name="title", maxlength: 80)
             input(placeholder="Description", required, type="text", name="description", minlength: 20)
             input(id="Lat", type="hidden", name="lat")
@@ -49,3 +51,5 @@ block content
             });
         };
         init();
+block scripts 
+    script(src="/static/js/recorder.js") 
