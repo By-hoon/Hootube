@@ -1,10 +1,10 @@
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 const actionBtn = document.getElementById("actionBtn");
-const story = document.getElementById("preview");
+const video = document.getElementById("preview");
 
 let stream;
 let recorder;
-let storyFile;
+let videoFile;
 
 const files = {
   input: "recording.webm",
@@ -30,7 +30,7 @@ const handleDownload = async () => {
   const ffmpeg = createFFmpeg({ log: true });
   await ffmpeg.load();
 
-  ffmpeg.FS("writeFile", files.input, await fetchFile(storyFile));
+  ffmpeg.FS("writeFile", files.input, await fetchFile(videoFile));
 
   await ffmpeg.run("-i", files.input, "-r", "60", files.output);
 
@@ -47,7 +47,7 @@ const handleDownload = async () => {
   const mp4File = ffmpeg.FS("readFile", files.output);
   const thumbFile = ffmpeg.FS("readFile", files.thumb);
 
-  const mp4Blob = new Blob([mp4File.buffer], { type: "story/mp4" });
+  const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
   const thumbBlob = new Blob([thumbFile.buffer], { type: "image/jpg" });
 
   const mp4Url = URL.createObjectURL(mp4Blob);
@@ -62,7 +62,7 @@ const handleDownload = async () => {
 
   URL.revokeObjectURL(mp4Url);
   URL.revokeObjectURL(thumbUrl);
-  URL.revokeObjectURL(storyFile);
+  URL.revokeObjectURL(videoFile);
 
   actionBtn.disabled = false;
   actionBtn.innerText = "Record Again";
@@ -73,13 +73,13 @@ const handleStart = () => {
   actionBtn.innerText = "Recording";
   actionBtn.disabled = true;
   actionBtn.removeEventListener("click", handleStart);
-  recorder = new MediaRecorder(stream, { mimeType: "story/webm" });
+  recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
   recorder.ondataavailable = (event) => {
-    storyFile = URL.createObjectURL(event.data);
-    story.srcObject = null;
-    story.src = storyFile;
-    story.loop = true;
-    story.play();
+    videoFile = URL.createObjectURL(event.data);
+    video.srcObject = null;
+    video.src = videoFile;
+    video.loop = true;
+    video.play();
     actionBtn.innerText = "Download";
     actionBtn.disabled = false;
     actionBtn.addEventListener("click", handleDownload);
@@ -93,13 +93,13 @@ const handleStart = () => {
 const init = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
-    story: {
+    video: {
       width: 1024,
       height: 576,
     },
   });
-  story.srcObject = stream;
-  story.play();
+  video.srcObject = stream;
+  video.play();
 };
 
 init();
