@@ -1,45 +1,119 @@
+const video = document.querySelector("video");
+const playBtn = document.getElementById("play");
+const playBtnIcon = playBtn.querySelector("i");
+const muteBtn = document.getElementById("mute");
+const muteBtnIcon = muteBtn.querySelector("i");
+const volumeRange = document.getElementById("volume");
+const currenTime = document.getElementById("currenTime");
+const totalTime = document.getElementById("totalTime");
+const timeline = document.getElementById("timeline");
+const fullScreenBtn = document.getElementById("fullScreen");
+const fullScreenIcon = fullScreenBtn.querySelector("i");
 const storyContainer = document.getElementById("storyContainer");
-const form = document.getElementById("commentForm");
+const storyControls = document.getElementById("storyControls");
 
-const addComment = (text, id) => {
-  const storyComments = document.querySelector(".story__comments ul");
-  const newComment = document.createElement("li");
-  newComment.dataset.id = id;
-  newComment.className = "story__comment";
-  const icon = document.createElement("i");
-  icon.className = "fas fa-comment";
-  const span = document.createElement("span");
-  span.innerText = ` ${text}`;
-  const span2 = document.createElement("span");
-  span2.innerText = "❌";
-  newComment.appendChild(icon);
-  newComment.appendChild(span);
-  newComment.appendChild(span2);
-  storyComments.prepend(newComment);
+let controlsTimeout = null;
+let controlsMovementTimeout = null;
+let volumeValue = 0.5;
+video.volume = volumeValue;
+
+const handlePlayClick = (e) => {
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
+  playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
 };
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  const textarea = form.querySelector("textarea");
-  const text = textarea.value;
-  const storyId = storyContainer.dataset.id;
-  if (text === "") {
-    return;
+const handleMuteClick = (e) => {
+  if (video.muted) {
+    video.muted = false;
+  } else {
+    video.muted = true;
   }
-  const response = await fetch(`/api/stories/${storyId}/comment`, {
+  muteBtnIcon.classList = video.muted
+    ? "fas fa-volume-mute"
+    : "fas fa-volume-up";
+  volumeRange.value = video.muted ? 0 : volumeValue;
+};
+
+const handleVolumeChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  if (video.muted) {
+    video.muted = false;
+    muteBtn.innerText = "Mute";
+  }
+  volumeValue = value;
+  video.volume = value;
+};
+
+const formatTime = (seconds) =>
+  new Date(seconds * 1000).toISOString().substr(14, 5);
+
+const handleLoadedMetadata = () => {
+  totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
+};
+
+const handleTimeUpdate = () => {
+  currenTime.innerText = formatTime(Math.floor(video.currentTime));
+  timeline.value = Math.floor(video.currentTime);
+};
+
+const handleTimelineChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  video.currentTime = value;
+};
+
+const handleFullscreen = () => {
+  const fullscreen = document.fullscreenElement;
+  if (fullscreen) {
+    document.exitFullscreen();
+    fullScreenIcon.classList = "fas fa-expand";
+  } else {
+    storyContainer.requestFullscreen();
+    fullScreenIcon.classList = "fas fa-compress";
+  }
+};
+
+const hideControls = () => storyControls.classList.remove("showing");
+
+const handleMouseMove = () => {
+  if (controlsTimeout) {
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
+  }
+  if (controlsMovementTimeout) {
+    clearTimeout(controlsMovementTimeout);
+    controlsMovementTimeout = null;
+  }
+  storyControls.classList.add("showing");
+  controlsMovementTimeout = setTimeout(hideControls, 3000);
+};
+
+const handleMouseLeave = () => {
+  controlsTimeout = setTimeout(hideControls, 3000);
+};
+
+const handleEnded = () => {
+  const { id } = storyContainer.dataset;
+  fetch(`/api/stories/${id}/view`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ text }),
   });
-  if (response.status === 201) {
-    textarea.value = "";
-    const { newCommentId } = await response.json();
-    addComment(text, newCommentId);
-  }
 };
 
-if (form) {
-  form.addEventListener("submit", handleSubmit);
-}
+playBtn.addEventListener("click", handlePlayClick);
+muteBtn.addEventListener("click", handleMuteClick);
+volumeRange.addEventListener("input", handleVolumeChange);
+video.addEventListener("loadedmetadata", handleLoadedMetadata);
+video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("ended", handleEnded);
+storyContainer.addEventListener("mousemove", handleMouseMove);
+storyContainer.addEventListener("mouseleave", handleMouseLeave);
+timeline.addEventListener("input", handleTimelineChange);
+fullScreenBtn.addEventListener("click", handleFullscreen);
